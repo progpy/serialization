@@ -1,9 +1,9 @@
-import json
+import pickle
 import os
 import time
 
-SAVE_NAME = 'primes.json'
-TEMP_NAME = 'primes.tmp.json'
+SAVE_NAME = 'primes.pickle'
+TEMP_NAME = 'primes.tmp.pickle'
 
 
 def gen_primes(known_primes=None, boundary=300000):
@@ -20,16 +20,16 @@ def gen_primes(known_primes=None, boundary=300000):
 
 
 def save_primes(known_primes):
-    with open(TEMP_NAME, 'wt') as f:
-        json.dump(known_primes, f)
+    with open(TEMP_NAME, 'wb') as f:
+        pickle.dump(known_primes, f)
     os.rename(TEMP_NAME, SAVE_NAME)
 
 
 def read_primes():
     primes = []
     try:
-        with open(SAVE_NAME, 'rt') as f:
-            primes = json.load(f)
+        with open(SAVE_NAME, 'rb') as f:
+            primes = pickle.load(f)
     except IOError:
         pass
     return primes
